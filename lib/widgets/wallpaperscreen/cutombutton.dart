@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton(
+  CustomButton(
       {super.key,
       required this.icon,
       required this.color,
-      required this.title});
+      required this.title,
+      this.onPressed});
   final IconData icon;
   final Color color;
   final String title;
+  VoidCallback? onPressed;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         OutlinedButton(
-          onPressed: () {},
+          onPressed: onPressed,
           style: OutlinedButton.styleFrom(
               fixedSize: const Size(65, 65),
               backgroundColor: color,

@@ -1,16 +1,57 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:wallpaper_world/components/title_widget.dart';
 import 'package:wallpaper_world/constants/constants.dart';
+import 'package:http/http.dart' as http;
+import 'package:wallpaper_world/screens/wallpaper_list_screen.dart';
+// import 'package:wallpaper_world/models/pixelapimodel.dart';
 
 import '../widgets/homescreen/bestofmonth_listview.dart';
 import '../widgets/homescreen/category_gridview.dart';
 import '../widgets/homescreen/color_listview.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final searchTxt = TextEditingController();
+// for trending images
+  fetchBestImages() async {
+    var response = await http.get(
+        Uri.parse(
+          "https://api.pexels.com/v1/curated?per_page=10",
+        ),
+        headers: {
+          "Authorization":
+              "Y1PtwSug4ODUe0LtZgjGy8Q2oDhjaPXgNZdWU8ojq7qVgh82S073phA4"
+        });
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body.toString());
+      List photos = data["photos"];
+
+      photos.forEach((element) {
+        Map<String, dynamic> src = element["src"];
+        bestOfTheMonth.add(src["portrait"].toString());
+      });
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchBestImages();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +80,44 @@ class HomeScreen extends StatelessWidget {
                     keyboardType: TextInputType.text,
                     style: GoogleFonts.aBeeZee(color: Colors.grey.shade400),
                     decoration: InputDecoration(
-                      suffixIcon: const Row(
+                      suffixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 6,
                           ),
-                          Icon(
-                            UniconsLine.search,
-                            size: 28,
+                          GestureDetector(
+                            onTap: () {
+                              if (searchTxt.text.toString().trim().isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text("Blank Search Field"),
+                                        actions: [
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text("Ok"))
+                                        ],
+                                      );
+                                    });
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            WallpaperListScreen(
+                                                title: searchTxt.text
+                                                    .toString()
+                                                    .trim())));
+                              }
+                            },
+                            child: const Icon(
+                              UniconsLine.search,
+                              size: 28,
+                            ),
                           ),
                         ],
                       ),
@@ -73,13 +143,21 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.sizeOf(context).width * .10,
                 ),
-                TitleAndWidget(
-                  title: "Best of the month",
-                  child: CustomPageView(
-                    height: 225,
-                    width: MediaQuery.sizeOf(context).width * .39,
-                    bestofthemonthData: bestOfTheMonth,
-                  ),
+                FutureBuilder(
+                  future: fetchBestImages(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return TitleAndWidget(
+                        title: "Best of the month",
+                        child: CustomPageView(
+                            height: 225,
+                            width: MediaQuery.sizeOf(context).width * .39,
+                            bestofthemonthData: bestOfTheMonth),
+                      );
+                    } else {
+                      return const Text("Error");
+                    }
+                  },
                 ),
                 SizedBox(
                   height: MediaQuery.sizeOf(context).width * .10,

@@ -1,14 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wallpaper_world/screens/wallpaperscreen.dart';
+import 'package:http/http.dart' as http;
 
 class CustomStaggeredGridView extends StatelessWidget {
-  const CustomStaggeredGridView({super.key, required this.img});
+  const CustomStaggeredGridView(
+      {super.key, required this.img, required this.title});
   final List<String> img;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return MasonryGridView.builder(
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
         gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
         ),
@@ -19,26 +26,27 @@ class CustomStaggeredGridView extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => WallpaperScreen(img: img[index]),
+                  builder: (context) => WallpaperScreen(
+                    img: img[index],
+                    tag: index.toString(),
+                  ),
                 ),
               );
             },
-            child: Container(
-              margin: EdgeInsets.only(
-                right: index % 2 == 0 ? 5 : 0,
-                left: index % 2 == 1 ? 5 : 0,
-                bottom: 10,
+            child: Hero(
+              tag: "$index",
+              child: Container(
+                height: index % 2 == 0
+                    ? MediaQuery.sizeOf(context).width / 1.6
+                    : MediaQuery.sizeOf(context).width / 1.5,
+                width: MediaQuery.sizeOf(context).width * .39,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(img[index]),
+                    )),
               ),
-              height: index % 2 == 0
-                  ? MediaQuery.sizeOf(context).width / 1.6
-                  : MediaQuery.sizeOf(context).width / 1.5,
-              width: MediaQuery.sizeOf(context).width * .39,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(img[index]),
-                  )),
             ),
           );
         });

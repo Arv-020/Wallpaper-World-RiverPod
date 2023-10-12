@@ -25,7 +25,6 @@ class CustomCategoryGridView extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => WallpaperListScreen(
-                      img: categoryList[index].img,
                       title: categoryList[index].category,
                     ),
                   ),

@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wallpaper_world/models/wallapermodel.dart';
 
-final List<String> bestOfTheMonth = [
-  "https://th.bing.com/th/id/OIP.coq1sEI-5s6AvTHyK17hzwHaEK?pid=ImgDet&rs=1",
-  "https://wallpapertag.com/wallpaper/full/6/c/1/501733-most-popular-pastel-colors-wallpaper-1920x1200.jpg",
-  "https://wallpapercave.com/wp/wp6279032.jpg",
-  "https://wallpapercave.com/wp/wp4811387.jpg",
-  "https://th.bing.com/th/id/OIP.GroQiztXrZIz93n1qf1K1gHaG3?pid=ImgDet&rs=1",
-];
+final List<String> bestOfTheMonth = [];
 
 final List<Color> colorTone = [
   Colors.pinkAccent,
@@ -18,30 +12,39 @@ final List<Color> colorTone = [
   Colors.orange,
   Colors.purple
 ];
+final List<String> colorsName = [
+  "pink",
+  "blue accent",
+  "blue",
+  "light blue",
+  "black",
+  "orange",
+  "purple"
+];
 
 final List<WallpaperModel> categoryList = [
-  WallpaperModel(category: "Abstrack", img: [
+  WallpaperModel(category: "Art", img: [
     "https://wallpaperscute.com/wp-content/uploads/2018/02/Abstract-Mobile-Wallpaper-HD.jpg",
-    "https://wallpapercave.com/wp/wp7691212.jpg",
-    "https://wallpapercave.com/wp/wp2964464.jpg",
-    "https://1.bp.blogspot.com/-v7-mKW2O7e4/YApSZA-VWOI/AAAAAAAAQF8/BiRw35LIF7QZ7RV4i9ToQTfK2r-8rxaRACLcBGAsYHQ/d/abstract-wallpaper-for-mobile-18.jpg",
-    "https://wallpapercave.com/wp/wp5762034.jpg",
-    "https://1.bp.blogspot.com/-0CFLEPSjii8/YApTO1g19jI/AAAAAAAAQJ8/orMbNHdgIE4cIdVfYe_tgixUR4eH8YRhwCLcBGAsYHQ/d/abstract-wallpaper-for-mobile-10.jpg",
-    "https://wallpapercave.com/wp/wp5554846.jpg",
-    "https://i.pinimg.com/originals/1e/b0/61/1eb0619c7b702c0fc826718b7f91dfde.jpg",
-    "https://wallpapercave.com/wp/wp6437324.jpg",
-    "https://1.bp.blogspot.com/-qv93_GnaPXw/YApS8fzz7GI/AAAAAAAAQJQ/nJ8DOLjqmgYR8cpxqwtmAvwMx8xmhHpYgCLcBGAsYHQ/d/dark-abstract-wallpaper-iphone-54.jpg",
-    "https://lh5.googleusercontent.com/proxy/qTp7CrdOgFLUL3rYN4meqbm9hTYldZoJQkEjI3mL6QhEAbacipcPzkxrVQZwiBp5PvFpue0NlnpVoG9JswU6gwWAje9xr8Jk2rntjA=s0-d",
-    "https://1.bp.blogspot.com/-6bJFARuMbuQ/YApSgxd82aI/AAAAAAAAQGw/IIXnx5S7EMwbHT2CeCgMuH3u9UOAJ8nmQCLcBGAsYHQ/d/abstract-wallpaper-for-mobile-33.jpg",
-    "https://1.bp.blogspot.com/-K20nPV41dHI/X8ntR1WNeaI/AAAAAAAAOG4/HiL7M4uZo0wxtDrR_KZ24aDt4fLJd9_OgCLcBGAsYHQ/s0/abstract-4k.jpg",
-    "https://wallpapercave.com/wp/wp6573741.jpg",
-    "https://wallpapercave.com/wp/wp5735842.jpg",
-    "https://img.wallpapersafari.com/phone/640/1136/82/7/n9gF6b.jpg",
-    "https://th.bing.com/th/id/R.a9f2bca5c691e38e10dc51c74c8b4f97?rik=FtoZCJckyfQvBg&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f8%2fa%2fe%2f299248.jpg&ehk=RZsRQYiP1NhnIC9%2fV9BCwwU36JZONDHlf9%2fJNO5XV0U%3d&risl=&pid=ImgRaw&r=0",
-    "https://www.hdwallpapers.in/download/abstract_blue_4k_hd_abstract-1440x2560.jpg",
-    "https://1.bp.blogspot.com/-m47tnTYrcS4/YApSxVPWBJI/AAAAAAAAQII/EuIoqR0LCJQlTC3iFt_MpQ6SjPJBBOixgCLcBGAsYHQ/d/abstract-wallpaper-for-mobile-64.jpg",
-    "https://www.pixelstalk.net/wp-content/uploads/2016/10/Abstract-Phone-Backgrounds-Download.jpg",
-    "https://th.bing.com/th/id/OIP.OofWZoW9SJ4mZE5fzkIFxAHaNK?pid=ImgDet&rs=1"
+    // "https://wallpapercave.com/wp/wp7691212.jpg",
+    // "https://wallpapercave.com/wp/wp2964464.jpg",
+    // "https://1.bp.blogspot.com/-v7-mKW2O7e4/YApSZA-VWOI/AAAAAAAAQF8/BiRw35LIF7QZ7RV4i9ToQTfK2r-8rxaRACLcBGAsYHQ/d/abstract-wallpaper-for-mobile-18.jpg",
+    // "https://wallpapercave.com/wp/wp5762034.jpg",
+    // "https://1.bp.blogspot.com/-0CFLEPSjii8/YApTO1g19jI/AAAAAAAAQJ8/orMbNHdgIE4cIdVfYe_tgixUR4eH8YRhwCLcBGAsYHQ/d/abstract-wallpaper-for-mobile-10.jpg",
+    // "https://wallpapercave.com/wp/wp5554846.jpg",
+    // "https://i.pinimg.com/originals/1e/b0/61/1eb0619c7b702c0fc826718b7f91dfde.jpg",
+    // "https://wallpapercave.com/wp/wp6437324.jpg",
+    // "https://1.bp.blogspot.com/-qv93_GnaPXw/YApS8fzz7GI/AAAAAAAAQJQ/nJ8DOLjqmgYR8cpxqwtmAvwMx8xmhHpYgCLcBGAsYHQ/d/dark-abstract-wallpaper-iphone-54.jpg",
+    // "https://lh5.googleusercontent.com/proxy/qTp7CrdOgFLUL3rYN4meqbm9hTYldZoJQkEjI3mL6QhEAbacipcPzkxrVQZwiBp5PvFpue0NlnpVoG9JswU6gwWAje9xr8Jk2rntjA=s0-d",
+    // "https://1.bp.blogspot.com/-6bJFARuMbuQ/YApSgxd82aI/AAAAAAAAQGw/IIXnx5S7EMwbHT2CeCgMuH3u9UOAJ8nmQCLcBGAsYHQ/d/abstract-wallpaper-for-mobile-33.jpg",
+    // "https://1.bp.blogspot.com/-K20nPV41dHI/X8ntR1WNeaI/AAAAAAAAOG4/HiL7M4uZo0wxtDrR_KZ24aDt4fLJd9_OgCLcBGAsYHQ/s0/abstract-4k.jpg",
+    // "https://wallpapercave.com/wp/wp6573741.jpg",
+    // "https://wallpapercave.com/wp/wp5735842.jpg",
+    // "https://img.wallpapersafari.com/phone/640/1136/82/7/n9gF6b.jpg",
+    // "https://th.bing.com/th/id/R.a9f2bca5c691e38e10dc51c74c8b4f97?rik=FtoZCJckyfQvBg&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f8%2fa%2fe%2f299248.jpg&ehk=RZsRQYiP1NhnIC9%2fV9BCwwU36JZONDHlf9%2fJNO5XV0U%3d&risl=&pid=ImgRaw&r=0",
+    // "https://www.hdwallpapers.in/download/abstract_blue_4k_hd_abstract-1440x2560.jpg",
+    // "https://1.bp.blogspot.com/-m47tnTYrcS4/YApSxVPWBJI/AAAAAAAAQII/EuIoqR0LCJQlTC3iFt_MpQ6SjPJBBOixgCLcBGAsYHQ/d/abstract-wallpaper-for-mobile-64.jpg",
+    // "https://www.pixelstalk.net/wp-content/uploads/2016/10/Abstract-Phone-Backgrounds-Download.jpg",
+    // "https://th.bing.com/th/id/OIP.OofWZoW9SJ4mZE5fzkIFxAHaNK?pid=ImgDet&rs=1"
   ]),
   WallpaperModel(category: "Nature", img: [
     "https://th.bing.com/th/id/OIP.p4koiRR4fGEvaCWVzumjNQHaNK?pid=ImgDet&rs=1",
@@ -110,7 +113,7 @@ final List<WallpaperModel> categoryList = [
     "https://img.wallpapersafari.com/phone/640/1136/99/75/gNjR59.jpg",
     "https://th.bing.com/th/id/OIP.K_j-NAECjFYo66-Td5_P7QHaNK?pid=ImgDet&rs=1"
   ]),
-  WallpaperModel(category: "Anime", img: [
+  WallpaperModel(category: "Happy", img: [
     "https://th.bing.com/th/id/OIP.TbFiC5d0dHxx2aEn_kiOcQAAAA?pid=ImgDet&rs=1",
   ]),
 ];
