@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wallpaper_world/constants/constants.dart';
 import 'package:wallpaper_world/models/pixelapimodel.dart';
 import 'package:wallpaper_world/screens/wallpaperscreen.dart';
@@ -22,6 +23,7 @@ class CustomPageView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: bestofthemonthData.length,
           itemBuilder: (context, index) {
+            String tag = Uuid().v4();
             return GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -29,14 +31,14 @@ class CustomPageView extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => WallpaperScreen(
                       img: bestOfTheMonth[index],
-                      tag: index.toString(),
+                      tag: tag,
                     ),
                   ),
                 );
               },
               child: Hero(
                 transitionOnUserGestures: true,
-                tag: "$index",
+                tag: tag,
                 child: Container(
                     height: height,
                     width: width,
