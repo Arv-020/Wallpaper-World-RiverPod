@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper_world/models/wallapermodel.dart';
+import 'package:wallpaper_world/models/category_model.dart';
 
 final List<String> bestOfTheMonth = [];
 
@@ -22,8 +22,8 @@ final List<String> colorsName = [
   "purple"
 ];
 
-final List<WallpaperModel> categoryList = [
-  WallpaperModel(category: "Art", img: [
+final List<CategoryModel> categoryList = [
+  CategoryModel(category: "Art", img: [
     "https://wallpaperscute.com/wp-content/uploads/2018/02/Abstract-Mobile-Wallpaper-HD.jpg",
     // "https://wallpapercave.com/wp/wp7691212.jpg",
     // "https://wallpapercave.com/wp/wp2964464.jpg",
@@ -46,7 +46,7 @@ final List<WallpaperModel> categoryList = [
     // "https://www.pixelstalk.net/wp-content/uploads/2016/10/Abstract-Phone-Backgrounds-Download.jpg",
     // "https://th.bing.com/th/id/OIP.OofWZoW9SJ4mZE5fzkIFxAHaNK?pid=ImgDet&rs=1"
   ]),
-  WallpaperModel(category: "Nature", img: [
+  CategoryModel(category: "Nature", img: [
     "https://th.bing.com/th/id/OIP.p4koiRR4fGEvaCWVzumjNQHaNK?pid=ImgDet&rs=1",
     "https://i0.wp.com/techbeasts.com/wp-content/uploads/2016/01/nature-wallpapers-hd.jpg",
     "https://th.bing.com/th/id/R.9559a8f67c226a4050441fafdde60eb0?rik=fHW5DiRhDIsWQw&riu=http%3a%2f%2f4.bp.blogspot.com%2f-Tz7pIQtKG90%2fUMAwb8ToA2I%2fAAAAAAAAOjs%2f7o4_RrUxc0c%2fs1600%2fGreen%2bNature%2bWallpapers%2b10.jpg&ehk=S7W6QMtPiaiQ2Rdf5%2bV3BMS6FRYC%2bFzS4Fd0QfChmKY%3d&risl=&pid=ImgRaw&r=0",
@@ -56,7 +56,7 @@ final List<WallpaperModel> categoryList = [
     "https://wallpaperaccess.com/full/157058.jpg",
     "https://wallpapercave.com/wp/wp6574376.jpg"
   ]),
-  WallpaperModel(category: "Galaxy", img: [
+  CategoryModel(category: "Galaxy", img: [
     "https://wallpapercave.com/wp/wp5855076.jpg",
     "https://th.bing.com/th/id/R.40dace2ad9848b2c8072ac8bedc6d3b6?rik=BIvKT4JXqO%2fzjg&riu=http%3a%2f%2fgetphotos.eu%2fwp-content%2fuploads%2f2015%2f02%2fSpace-Galaxy-Smartphone-Wallpapers-HD.jpg&ehk=9lFwFRma93bmHZUQFBTkhxv23XoptREU%2fognaD9Shzw%3d&risl=&pid=ImgRaw&r=0",
     "https://www.pixelstalk.net/wp-content/uploads/2016/09/iPhone-Galaxy-Backgrounds-Free-Download.jpg",
@@ -72,7 +72,7 @@ final List<WallpaperModel> categoryList = [
     "https://image.winudf.com/v2/image1/Y29tLm1vYmlsZXVuaXZlcnNpdHkuZ2FsYXh5X3NjcmVlbl80XzE1NDMyOTM0NjRfMDc1/screen-4.jpg?fakeurl=1&type=.jpg",
     "https://th.bing.com/th/id/OIP.-WGOAjKYxeNqdmxtHdnjugHaNL?pid=ImgDet&rs=1"
   ]),
-  WallpaperModel(category: "Animals", img: [
+  CategoryModel(category: "Animals", img: [
     "https://wallpaperaccess.com/full/1321378.jpg",
     "https://wallpapercave.com/wp/wp5125277.jpg",
     "https://th.bing.com/th/id/OIP.bpYu2NTr1ekn7x9UTVithgHaNK?pid=ImgDet&rs=1",
@@ -89,7 +89,7 @@ final List<WallpaperModel> categoryList = [
     "https://image.winudf.com/v2/image/d2lsZC5hbmltYWwud2FsbHBhcGVyc3Nfc2NyZWVuXzBfeThlbGUydG4/screen-0.jpg?fakeurl=1&type=.jpg",
     "https://iphonewallpaperphoto.files.wordpress.com/2020/02/iphone-wallpaper-fox-1.png",
   ]),
-  WallpaperModel(category: "Cars", img: [
+  CategoryModel(category: "Cars", img: [
     "https://wallpapercave.com/wp/wp2150865.jpg",
     "https://i.pinimg.com/originals/b6/d2/0c/b6d20c8172098184c9dbb669e3e7d29e.jpg",
     "https://wallpaperaccess.com/full/239050.jpg",
@@ -113,7 +113,7 @@ final List<WallpaperModel> categoryList = [
     "https://img.wallpapersafari.com/phone/640/1136/99/75/gNjR59.jpg",
     "https://th.bing.com/th/id/OIP.K_j-NAECjFYo66-Td5_P7QHaNK?pid=ImgDet&rs=1"
   ]),
-  WallpaperModel(category: "Happy", img: [
+  CategoryModel(category: "Happy", img: [
     "https://th.bing.com/th/id/OIP.TbFiC5d0dHxx2aEn_kiOcQAAAA?pid=ImgDet&rs=1",
   ]),
 ];

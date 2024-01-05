@@ -1,5 +1,9 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:wallpaper_world/controller/api_controller.dart';
 
 import 'package:wallpaper_world/screens/homescreen.dart';
 
@@ -9,7 +13,8 @@ void main() {
       statusBarColor: Color.fromARGB(255, 216, 235, 239),
     ),
   );
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => ApiController(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +22,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),
     );

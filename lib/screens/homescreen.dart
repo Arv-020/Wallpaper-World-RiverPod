@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:unicons/unicons.dart';
 import 'package:wallpaper_world/components/title_widget.dart';
 import 'package:wallpaper_world/constants/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:wallpaper_world/controller/api_controller.dart';
 import 'package:wallpaper_world/screens/wallpaper_list_screen.dart';
 // import 'package:wallpaper_world/models/pixelapimodel.dart';
 
@@ -23,38 +25,38 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final searchTxt = TextEditingController();
 // for trending images
-  fetchBestImages() async {
-    var response = await http.get(
-        Uri.parse(
-          "https://api.pexels.com/v1/curated?per_page=10",
-        ),
-        headers: {
-          "Authorization":
-              "Y1PtwSug4ODUe0LtZgjGy8Q2oDhjaPXgNZdWU8ojq7qVgh82S073phA4"
-        });
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body.toString());
-      List photos = data["photos"];
 
-      photos.forEach((element) {
-        Map<String, dynamic> src = element["src"];
-        bestOfTheMonth.add(src["portrait"].toString());
-      });
-      return true;
-    } else {
-      return false;
-    }
-  }
+final ScrollController _scrollController = ScrollController();
+  
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchBestImages();
+    _scrollController.addListener(addPagination);
+    context.read<ApiController>().fetchBestImages(page: pageCount);
   }
+
+  int pageCount = 1;
+
+  void addPagination() {
+    if (_scrollController.offset ==
+        _scrollController.position.maxScrollExtent) {
+      setState(() {
+        pageCount++;
+      });
+
+      context.read<ApiController>().fetchBestImages(page: pageCount);
+    }
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
+    var providerList = context.watch<ApiController>().bestOfTheMonth;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -76,6 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.sizeOf(context).width * .06),
                   child: TextField(
+                    onTapOutside: (e) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
                     controller: searchTxt,
                     keyboardType: TextInputType.text,
                     style: GoogleFonts.aBeeZee(color: Colors.grey.shade400),
@@ -88,7 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              if (searchTxt.text.toString().trim().isEmpty) {
+
+                              var txt = searchTxt.text.trim().toString();
+                              if (txt.isEmpty) {
                                 showDialog(
                                     context: context,
                                     builder: (context) {
@@ -109,10 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             WallpaperListScreen(
-                                                title: searchTxt.text
-                                                    .toString()
-                                                    .trim())));
+                                                title: txt)));
+                                searchTxt.clear();
                               }
+
+                            
                             },
                             child: const Icon(
                               UniconsLine.search,
@@ -143,22 +151,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: MediaQuery.sizeOf(context).width * .10,
                 ),
-                FutureBuilder(
-                  future: fetchBestImages(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return TitleAndWidget(
+               
+               
+              
+                    
+                TitleAndWidget(
                         title: "Best of the month",
                         child: CustomPageView(
+                      controller: _scrollController,
                             height: 225,
                             width: MediaQuery.sizeOf(context).width * .39,
-                            bestofthemonthData: bestOfTheMonth),
-                      );
-                    } else {
-                      return const Text("Error");
-                    }
-                  },
+                      bestofthemonthData: providerList),
                 ),
+                   
                 SizedBox(
                   height: MediaQuery.sizeOf(context).width * .10,
                 ),
