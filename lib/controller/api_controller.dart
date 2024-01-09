@@ -68,9 +68,11 @@ class ApiController extends ChangeNotifier {
 
       final wallpaperData = WallpaperModel.fromJson(data);
       totalResults = wallpaperData.totalresults!;
-      for (final element in wallpaperData.photos!) {
-        _listPhotos.add(element!);
-      }
+      // for (final element in wallpaperData.photos!) {
+      //   _listPhotos.addAll(element!);
+      // }
+
+      _listPhotos.addAll(wallpaperData.photos!.map((e) => e!));
 
       notifyListeners();
 

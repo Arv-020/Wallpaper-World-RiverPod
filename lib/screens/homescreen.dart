@@ -1,28 +1,30 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+
 import 'package:unicons/unicons.dart';
 import 'package:wallpaper_world/components/title_widget.dart';
 import 'package:wallpaper_world/constants/constants.dart';
-import 'package:http/http.dart' as http;
 import 'package:wallpaper_world/controller/api_controller.dart';
+import 'package:wallpaper_world/controller/connectivity_service.dart';
 import 'package:wallpaper_world/screens/wallpaper_list_screen.dart';
+import 'package:wallpaper_world/ui_helper/ui_helper.dart';
 // import 'package:wallpaper_world/models/pixelapimodel.dart';
 
 import '../widgets/homescreen/bestofmonth_listview.dart';
 import '../widgets/homescreen/category_gridview.dart';
 import '../widgets/homescreen/color_listview.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatefulWidget {
+
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   final searchTxt = TextEditingController();
 // for trending images
 
@@ -34,7 +36,7 @@ final ScrollController _scrollController = ScrollController();
     // TODO: implement initState
     super.initState();
     _scrollController.addListener(addPagination);
-    context.read<ApiController>().fetchBestImages(page: pageCount);
+    ref.read(wallpaperProvider.notifier).fetchBestImages(page: pageCount);
   }
 
   int pageCount = 1;
@@ -46,7 +48,7 @@ final ScrollController _scrollController = ScrollController();
         pageCount++;
       });
 
-      context.read<ApiController>().fetchBestImages(page: pageCount);
+      ref.read(wallpaperProvider.notifier).fetchBestImages(page: pageCount);
     }
   }
 
@@ -54,11 +56,22 @@ final ScrollController _scrollController = ScrollController();
 
 
 
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+
+    ref.read(wallpaperProvider.notifier).clearBestList();
+    super.deactivate();
+  }
   @override
   Widget build(BuildContext context) {
-    var providerList = context.watch<ApiController>().bestOfTheMonth;
+    var providerList = ref.watch(wallpaperProvider).bestOfTheMonth;
+    var networkStatus = ref.watch(connectionProvider);
     return Scaffold(
-      body: SafeArea(
+      body: networkStatus.value == NetworkStatus.offline
+          ? UiHelper.noNetworkWidget()
+          : SafeArea(
         child: SingleChildScrollView(
           child: Container(
             decoration: const BoxDecoration(

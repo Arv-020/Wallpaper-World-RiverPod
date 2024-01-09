@@ -1,30 +1,45 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// import 'package:provider/provider.dart';
 import 'package:wallpaper_world/controller/api_controller.dart';
+import 'package:wallpaper_world/controller/connectivity_service.dart';
+import 'package:wallpaper_world/ui_helper/ui_helper.dart';
 import 'package:wallpaper_world/widgets/wallpaperlist_screen/staggerdgridview.dart';
 import 'package:lottie/lottie.dart';
 
-class WallpaperListScreen extends StatefulWidget {
+
+final connectionProvider =
+    StreamProvider((ref) => ConnectivityService().controller.stream);
+final wallpaperProvider = ChangeNotifierProvider((ref) => ApiController());
+
+class WallpaperListScreen extends ConsumerStatefulWidget {
   const WallpaperListScreen({super.key, required this.title});
 
   final String title;
+  
+
 
   @override
-  State<WallpaperListScreen> createState() => _WallpaperListScreenState();
+  ConsumerState<WallpaperListScreen> createState() =>
+      _WallpaperListScreenState();
 }
 
-class _WallpaperListScreenState extends State<WallpaperListScreen> {
+
+class _WallpaperListScreenState extends ConsumerState<WallpaperListScreen> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    context
-        .read<ApiController>()
+    ref
+        .read(wallpaperProvider.notifier)
         .fetchImages(keyWord: widget.title, page: pageCount);
     _scrollController.addListener(addPagination);
   }
@@ -45,7 +60,7 @@ class _WallpaperListScreenState extends State<WallpaperListScreen> {
   }
 
   void removeItems() {
-    context.read<ApiController>().resetList();
+    ref.read(wallpaperProvider.notifier).resetList();
   }
 
   final ScrollController _scrollController = ScrollController();
@@ -58,18 +73,20 @@ class _WallpaperListScreenState extends State<WallpaperListScreen> {
       setState(() {
         pageCount++;
       });
-      context
-          .read<ApiController>()
+      ref
+          .read(wallpaperProvider.notifier)
           .fetchImages(keyWord: widget.title, page: pageCount);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var provider = context.watch<ApiController>();
-
+    var provider = ref.watch(wallpaperProvider);
+    var networkStatus = ref.watch(connectionProvider);
     return Scaffold(
-      body: SafeArea(
+      body: networkStatus.value == NetworkStatus.offline
+          ? UiHelper.noNetworkWidget()
+          : SafeArea(
           child: provider.totalResults == 0
               ? Center(
                   child: Column(

@@ -10,12 +10,15 @@ import 'package:gallery_saver/files.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:unicons/unicons.dart';
+import 'package:wallpaper_world/controller/connectivity_service.dart';
+import 'package:wallpaper_world/screens/wallpaper_list_screen.dart';
 import 'package:wallpaper_world/ui_helper/ui_helper.dart';
 import 'package:wallpaper_world/widgets/wallpaperscreen/cutombutton.dart';
 
-class WallpaperScreen extends StatelessWidget {
+class WallpaperScreen extends ConsumerWidget {
   const WallpaperScreen({super.key, required this.img, required this.tag});
   final String img;
   final String tag;
@@ -64,12 +67,16 @@ class WallpaperScreen extends StatelessWidget {
 
   
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     var mH = MediaQuery.sizeOf(context).height;
     var mW = MediaQuery.sizeOf(context).width;
 
+    var networkStatus = ref.watch(connectionProvider);
+
     return Scaffold(
-      body: Hero(
+      body: networkStatus.value == NetworkStatus.offline
+          ? UiHelper.noNetworkWidget()
+          : Hero(
         tag: tag,
         child: Stack(
             alignment: Alignment.bottomCenter,
