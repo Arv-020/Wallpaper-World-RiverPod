@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:wallpaper_world/components/title_widget.dart';
 import 'package:wallpaper_world/constants/constants.dart';
-import 'package:wallpaper_world/controller/api_controller.dart';
 import 'package:wallpaper_world/controller/connectivity_service.dart';
 import 'package:wallpaper_world/screens/wallpaper_list_screen.dart';
 import 'package:wallpaper_world/ui_helper/ui_helper.dart';

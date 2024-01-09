@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton(
+  const CustomButton(
       {super.key,
       required this.icon,
       required this.color,
@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String title;
-  VoidCallback? onPressed;
+  final VoidCallback? onPressed;
   @override
   Widget build(BuildContext context) {
     return Column(
